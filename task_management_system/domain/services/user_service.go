@@ -34,11 +34,11 @@ func NewUsersService(
 }
 
 func (s *UsersService) AddUser(ctx context.Context, req *request.AddUserRequest) (*string, errors.IError) {
-	id, err := s.taskDetailsRepo.AddTaskDetails(ctx, nil)
+	id, err := s.usersRepo.AddUsers(ctx, s.parseAddUserReqToUser(req))
 	if err != nil {
 		return nil, err
 	}
-	return id, nil
+	return &id, nil
 }
 
 func (s *UsersService) AssignUserTask(ctx context.Context, req *request.AssignUserTaskRequest) errors.IError {
@@ -59,4 +59,12 @@ func (s *UsersService) AssignUserTask(ctx context.Context, req *request.AssignUs
 	}
 
 	return nil
+}
+
+func (s *UsersService) parseAddUserReqToUser(req *request.AddUserRequest) *users.Users {
+	record := users.Users{}
+	record.Name = &req.Name
+	record.EmailId = &req.Email
+
+	return &record
 }

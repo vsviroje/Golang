@@ -24,8 +24,6 @@ var (
 		string(task_details.ColDescription),
 		string(task_details.ColDueDate),
 		string(task_details.ColIsDeleted),
-		string(task_details.ColCreatedAt),
-		string(task_details.ColUpdatedAt),
 	}, ",")
 	itaskDetailsInsertValues = "?, ?, ?, ?, ?, ?, ?"
 )
@@ -116,8 +114,6 @@ func (cr *TaskDetailsRepo) GetTaskDetailsByUserId(ctx context.Context, userId st
 			&taskDetailsModel.Description,
 			&taskDetailsModel.DueDate,
 			&taskDetailsModel.IsDeleted,
-			&taskDetailsModel.CreatedAt,
-			&taskDetailsModel.UpdatedAt,
 		)
 
 		if err != nil {
@@ -173,8 +169,6 @@ func (cr *TaskDetailsRepo) GetTaskDetailsByUserIdAndStatus(ctx context.Context, 
 			&taskDetailsModel.Description,
 			&taskDetailsModel.DueDate,
 			&taskDetailsModel.IsDeleted,
-			&taskDetailsModel.CreatedAt,
-			&taskDetailsModel.UpdatedAt,
 		)
 
 		if err != nil {
@@ -190,7 +184,7 @@ func (cr *TaskDetailsRepo) GetTaskDetailsByUserIdAndStatus(ctx context.Context, 
 }
 
 func (cr *TaskDetailsRepo) initAddTaskDetails(ctx context.Context) (*sql.Stmt, errors.IError, string) {
-	insertTaskDetailsQuery := fmt.Sprintf("INSERT INTO %s (%s) %s", cr.table, taskDetailsColumns, itaskDetailsInsertValues)
+	insertTaskDetailsQuery := fmt.Sprintf("INSERT INTO %s (%s) values (%s)", cr.table, taskDetailsColumns, itaskDetailsInsertValues)
 	insertTdStmt, err := cr.dataStore.PrepareStatement(ctx, insertTaskDetailsQuery)
 	if err != nil {
 		logMysqlError(ctx, err, insertTaskDetailsQuery, "initAddTaskDetails|PrepareStatement|failed", nil)
@@ -208,8 +202,10 @@ func (cr *TaskDetailsRepo) AddTaskDetails(ctx context.Context, data *task_detail
 
 	uuid := util.GenerateUUIDPk()
 	newRec := false
+	status := "Pending"
 	data.Id = &uuid
 	data.IsDeleted = &newRec
+	data.Status = &status
 
 	insertArgs := []interface{}{
 		data.Id,
@@ -240,7 +236,7 @@ func (cr *TaskDetailsRepo) AddTaskDetails(ctx context.Context, data *task_detail
 }
 
 func (cr *TaskDetailsRepo) initUpdateTaskDetailsStmt(ctx context.Context) (*sql.Stmt, errors.IError, string) {
-	updateTaskDetailsQuery := fmt.Sprintf("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ? ;", cr.table, task_details.ColStatus, task_details.ColTitle, task_details.ColDescription, task_details.ColDueDate, task_details.ColID)
+	updateTaskDetailsQuery := fmt.Sprintf("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ? ;", cr.table, task_details.ColStatus, task_details.ColTitle, task_details.ColDescription, task_details.ColDueDate, task_details.ColUserId, task_details.ColID)
 	updateTaskDetailsStmt, err := cr.dataStore.PrepareStatement(ctx, updateTaskDetailsQuery)
 	if err != nil {
 		logMysqlError(ctx, err, updateTaskDetailsQuery, "initUpdateTaskDetailsStmt|PrepareStatement|failed", nil)
@@ -261,6 +257,7 @@ func (cr *TaskDetailsRepo) UpdateTaskDetails(ctx context.Context, data *task_det
 		data.Title,
 		data.Description,
 		data.DueDate,
+		data.UserId,
 		data.Id,
 	}
 

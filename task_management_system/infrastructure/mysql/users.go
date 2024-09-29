@@ -21,8 +21,6 @@ var (
 		string(users.ColName),
 		string(users.ColEmail),
 		string(users.ColIsDeleted),
-		string(users.ColCreatedAt),
-		string(users.ColUpdatedAt),
 	}, ",")
 	usersInsertValues = "?, ?, ?, ?"
 )
@@ -107,7 +105,7 @@ func (cr *UserRepo) GetUserByEmail(ctx context.Context, email string) (*users.Us
 }
 
 func (cr *UserRepo) initAddUser(ctx context.Context) (*sql.Stmt, errors.IError, string) {
-	insertUserQuery := fmt.Sprintf("INSERT INTO %s (%s) %s", cr.table, usersColumns, usersInsertValues)
+	insertUserQuery := fmt.Sprintf("INSERT INTO %s (%s) values (%s)", cr.table, usersColumns, usersInsertValues)
 	insertUserStmt, err := cr.dataStore.PrepareStatement(ctx, insertUserQuery)
 	if err != nil {
 		logMysqlError(ctx, err, insertUserQuery, "initAddUser|PrepareStatement|failed", nil)

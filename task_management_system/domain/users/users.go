@@ -1,16 +1,12 @@
 package users
 
-import (
-	"time"
-)
-
 type Users struct {
-	Id        *string    `db:"id"`
-	Name      *string    `db:"name"`
-	EmailId   *string    `db:"email"`
-	IsDeleted *bool      `db:"is_deleted"`
-	CreatedAt *time.Time `db:"created_at"`
-	UpdatedAt *time.Time `db:"updated_at"`
+	Id        *string `db:"id"`
+	Name      *string `db:"name"`
+	EmailId   *string `db:"email"`
+	IsDeleted *bool   `db:"is_deleted"`
+	// CreatedAt *time.Time `db:"created_at"`
+	// UpdatedAt *time.Time `db:"updated_at"`
 }
 
 type UserColumn string

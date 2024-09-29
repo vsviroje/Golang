@@ -86,8 +86,6 @@ func (s *TaskDetailsService) parseTaskDetailsToGetTaskResp(rec *task_details.Tas
 		Title:       rec.Title,
 		Description: rec.Description,
 		DueDate:     rec.DueDate,
-		CreatedAt:   *rec.CreatedAt,
-		UpdatedAt:   *rec.UpdatedAt,
 	}
 }
 

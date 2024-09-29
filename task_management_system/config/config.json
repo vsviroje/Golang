@@ -1,0 +1,17 @@
+{
+  "app_port": "3000",
+  "mysqldb": {
+    "enabled": true,
+    "host": "localhost:3306",
+    "driver": "mysql",
+    "db_name": "task_management",
+    "username": "taskManagement",
+    "password": "root",
+    "migration_dir": "",
+    "timeout": 60,
+    "dial_timeout": 20,
+    "max_idle_conns": 10,
+    "max_open_conns_int": 10,
+    "ssl_mode": "disable"
+  }
+}

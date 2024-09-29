@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: task_management_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+  db:
+    image: mysql:latest
+    container_name: task_management_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: task_management
+      MYSQL_USER: taskManagement
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:

@@ -1,0 +1,1187 @@
+definitions:
+  request.AddCallbackSpecificationRequest:
+    properties:
+      baseUrl:
+        type: string
+      path:
+        type: string
+      type:
+        type: string
+    type: object
+  request.AddCredentialSpecificationRequest:
+    properties:
+      merchant_id:
+        type: string
+      mode:
+        type: string
+      secret_word:
+        type: string
+      secured_key:
+        type: string
+    type: object
+  request.AddSpecificationRequest:
+    properties:
+      configKey:
+        type: string
+      configValue:
+        items:
+          type: integer
+        type: array
+    type: object
+  request.CreateRefundRequest:
+    properties:
+      amount:
+        description: required
+        example: 1000.1
+        type: number
+      async:
+        type: boolean
+      coreReferenceId:
+        description: required, core payment ID
+        example: 5c3c8134-ab6b-4c03-89ea-b74dc2ac9fe3
+        type: string
+      coreTransactionId:
+        description: required, core refund ID
+        example: 5c3c8134-ab6b-4c03-89ea-b74dc2ac9fe3
+        type: string
+      currency:
+        description: required
+        example: SGD
+        type: string
+      notificationChannel:
+        $ref: '#/definitions/request.TransactionCallback'
+        description: required if async=true
+      paymentConfigCategory:
+        example: TEST
+        type: string
+    type: object
+  request.CreateUpfrontRequest:
+    properties:
+      amount:
+        example: 0
+        type: number
+      coreInstrumentId:
+        example: 2c7223af-5aee-4f0c-9578-80262bdee749
+        type: string
+      coreProfileId:
+        description: will be used for creating stripe Customer
+        example: 2c7223af-5aee-4f0c-9578-80262bdee749
+        type: string
+      coreTransactionId:
+        example: 2c7223af-5aee-4f0c-9578-80262bdee749
+        type: string
+      currency:
+        example: SGD
+        type: string
+      paymentConfigCategory:
+        example: TEST
+        type: string
+    type: object
+  request.TransactionCallback:
+    properties:
+      method:
+        example: POST
+        type: string
+      type:
+        example: http_webhook
+        type: string
+      url:
+        example: http://my-domain.com/payments/communication/
+        type: string
+    type: object
+  request.UpdateCallbackSpecificationRequest:
+    properties:
+      baseUrl:
+        type: string
+      path:
+        type: string
+      type:
+        type: string
+    type: object
+  request.UpdateCredentialSpecificationRequest:
+    properties:
+      merchant_id:
+        type: string
+      mode:
+        type: string
+      secret_word:
+        type: string
+      secured_key:
+        type: string
+    type: object
+  request.UpdateSpecificationRequest:
+    properties:
+      configKey:
+        type: string
+      configValue:
+        items:
+          type: integer
+        type: array
+    type: object
+  response.AddCallbackSpecificationResponse:
+    properties:
+      baseUrl:
+        type: string
+      path:
+        type: string
+      type:
+        type: string
+    type: object
+  response.AddCredentialSpecificationResponse:
+    properties:
+      merchant_id:
+        type: string
+      mode:
+        type: string
+      secret_word:
+        type: string
+      secured_key:
+        type: string
+    type: object
+  response.AddSpecificationResponse:
+    properties:
+      configKey:
+        type: string
+    type: object
+  response.CreateRefundResponse:
+    properties:
+      connectorTransactionId:
+        example: 5c3c8134-ab6b-4c03-89ea-b74dc2ac9fe3
+        type: string
+      coreReferenceId:
+        example: 0ab1266c-70a6-442f-af8c-4664610c1bce
+        type: string
+      coreTransactionId:
+        example: fcdd50f0-3999-43b4-bb53-8821ea9eb230
+        type: string
+      paymentGatewayReferenceId:
+        type: string
+      refundedAmount:
+        example: 100.5
+        type: number
+      status:
+        example: SUCCESS
+        type: string
+    type: object
+  response.CreateUpfrontResponse:
+    properties:
+      connectorInstrumentId:
+        example: 3184abf1-8452-4b90-b502-75db646233fd
+        type: string
+      connectorTransactionId:
+        type: string
+      coreInstrumentId:
+        example: 2c7223af-5aee-4f0c-9578-80262bdee749
+        type: string
+      coreProfileId:
+        type: string
+      coreTransactionId:
+        example: 5c3c8134-ab6b-4c03-89ea-b74dc2ac9fe3
+        type: string
+      data:
+        $ref: '#/definitions/response.Data'
+      errorCode:
+        example: "400"
+        type: string
+      errorMessage:
+        example: NotAllowed
+        type: string
+      paymentIntentStatus:
+        example: FAILURE
+        type: string
+      status:
+        example: false
+        type: boolean
+    type: object
+  response.Data:
+    properties:
+      intent:
+        $ref: '#/definitions/response.Intent'
+        description: payfast payment
+      object:
+        example: stripe
+        type: string
+    type: object
+  response.DeleteCallbackSpecificationResponse:
+    properties:
+      type:
+        type: string
+    type: object
+  response.DeleteCredentialSpecificationResponse:
+    properties:
+      mode:
+        type: string
+    type: object
+  response.DeleteSpecificationResponse:
+    properties:
+      configKey:
+        type: string
+    type: object
+  response.GetCallbackSpecificationResponse:
+    properties:
+      baseUrl:
+        type: string
+      path:
+        type: string
+      type:
+        type: string
+    type: object
+  response.GetCredentialSpecificationResponse:
+    properties:
+      merchant_id:
+        type: string
+      mode:
+        type: string
+      secret_word:
+        type: string
+      secured_key:
+        type: string
+    type: object
+  response.GetSpecificationResponse:
+    properties:
+      configKey:
+        example: payment_gateway
+        type: string
+      configValue:
+        items:
+          type: integer
+        type: array
+    type: object
+  response.Intent:
+    properties:
+      action:
+        type: string
+      amount:
+        type: number
+      basket_id:
+        type: string
+      checkout_url:
+        type: string
+      currency_code:
+        type: string
+      merchant_id:
+        type: number
+      merchant_name:
+        type: string
+      order_date:
+        type: string
+      signature:
+        type: string
+      token:
+        type: string
+      txn_desc:
+        type: string
+    type: object
+  response.ListTransactionResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/response.Transaction'
+        type: array
+    type: object
+  response.Transaction:
+    properties:
+      amount:
+        type: number
+      charge_amount:
+        type: number
+      coreTransactionId:
+        type: string
+      createdAt:
+        type: string
+      currency:
+        type: string
+      discount_amount:
+        type: number
+      errorCode:
+        type: string
+      errorMessage:
+        type: string
+      id:
+        type: string
+      instrumentId:
+        type: string
+      metadata:
+        type: string
+      promotionType:
+        type: string
+      pspReference:
+        type: string
+      pspRefundReference:
+        type: string
+      status:
+        type: string
+      type:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  response.UpdateCallbackSpecificationResponse:
+    properties:
+      baseUrl:
+        type: string
+      path:
+        type: string
+      type:
+        type: string
+    type: object
+  response.UpdateCredentialSpecificationResponse:
+    properties:
+      merchant_id:
+        type: string
+      mode:
+        type: string
+      secret_word:
+        type: string
+      secured_key:
+        type: string
+    type: object
+  response.UpdateSpecificationResponse:
+    properties:
+      configKey:
+        example: payment_gateway
+        type: string
+      configValue:
+        items:
+          type: integer
+        type: array
+    type: object
+  respwriter.DebugDetails:
+    properties:
+      description:
+        example: Password should be 8 to 13 character long
+        type: string
+      message:
+        example: Invalid password
+        type: string
+      responseTime:
+        example: 2021-07-10T13:03:17
+        type: string
+    type: object
+  respwriter.ErrorDetails:
+    properties:
+      debug:
+        $ref: '#/definitions/respwriter.DebugDetails'
+      errorCode:
+        example: ERROR_VALIDATION_FAILURE
+        type: string
+      errorId:
+        example: 400001
+        type: integer
+    type: object
+  respwriter.ErrorResponse:
+    properties:
+      failure:
+        $ref: '#/definitions/respwriter.ErrorDetails'
+      success:
+        type: boolean
+    type: object
+  respwriter.SuccessResponse:
+    properties:
+      result: {}
+      success:
+        type: boolean
+    type: object
+host: localhost:3000/
+info:
+  contact:
+    email: launch-tech@circles.asia
+    name: Launch
+  description: Payment Connector for Payfast Interface
+  title: 'Payment Connector: Payfast'
+  version: 0.0.1
+paths:
+  /{version}/{country}/{locale}/{tenant}/payfast/internal/admin/transactions:
+    get:
+      description: This API returns a list of transactions which matches the filters
+      parameters:
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: sg
+        description: Country
+        in: path
+        name: country
+        required: true
+        type: string
+      - default: local
+        description: Tenant
+        in: path
+        name: tenant
+        required: true
+        type: string
+      - default: en
+        description: Locale
+        in: path
+        name: locale
+        required: true
+        type: string
+      - default: UPFRONT
+        description: UPFRONT,REFUND
+        in: query
+        name: type
+        type: string
+      - default: ac8d59ce-5026-498d-abaf-2b959596b885
+        description: connector transaction id
+        in: query
+        name: id
+        type: string
+      - default: SUCCESS
+        description: SUCCESS,FAILURE
+        in: query
+        name: status
+        type: string
+      - default: 10
+        description: limit
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ListTransactionResponse'
+      summary: get list of transactions
+      tags:
+      - Admin
+  /{version}/{country}/{locale}/{tenant}/payfast/internal/admin/transactions/{id}:
+    get:
+      description: This API returns a list of transactions which matches the filters
+      parameters:
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: sg
+        description: Country
+        in: path
+        name: country
+        required: true
+        type: string
+      - default: local
+        description: Tenant
+        in: path
+        name: tenant
+        required: true
+        type: string
+      - default: en
+        description: Locale
+        in: path
+        name: locale
+        required: true
+        type: string
+      - default: ac8d59ce-5026-498d-abaf-2b959596b885
+        description: connector transaction id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Transaction'
+      summary: get list of transactions
+      tags:
+      - Admin
+  /{version}/{country}/{locale}/{tenant}/payfast/internal/payment/refund:
+    post:
+      consumes:
+      - application/json
+      description: This API will process refund request of an existing payment and
+        returns refund details
+      parameters:
+      - default: '"42ab4"'
+        description: Tenant ID
+        in: header
+        name: Tenant-Id
+        required: true
+        type: string
+      - default: '"1232321"'
+        description: Request ID
+        in: header
+        name: Request-Id
+        required: true
+        type: string
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: sg
+        description: Country
+        in: path
+        name: country
+        required: true
+        type: string
+      - default: local
+        description: Tenant
+        in: path
+        name: tenant
+        required: true
+        type: string
+      - default: en
+        description: Locale
+        in: path
+        name: locale
+        required: true
+        type: string
+      - description: Request Payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateRefundRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CreateRefundResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "429":
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Process refund payment requests
+      tags:
+      - Payment
+  /{version}/{country}/{locale}/{tenant}/payfast/internal/payment/upfront:
+    post:
+      consumes:
+      - application/json
+      description: This API will process upfront payment requests and returns payment
+        details
+      parameters:
+      - default: '"42ab4"'
+        description: Tenant ID
+        in: header
+        name: Tenant-Id
+        required: true
+        type: string
+      - default: '"1232321"'
+        description: Request ID
+        in: header
+        name: Request-Id
+        required: true
+        type: string
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: sg
+        description: Country
+        in: path
+        name: country
+        required: true
+        type: string
+      - default: local
+        description: Tenant
+        in: path
+        name: tenant
+        required: true
+        type: string
+      - default: en
+        description: Locale
+        in: path
+        name: locale
+        required: true
+        type: string
+      - description: Request Payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateUpfrontRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CreateUpfrontResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "429":
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Process upfront payment requests
+      tags:
+      - Payment
+  /{version}/payfast/external/call-back/payment:
+    post:
+      consumes:
+      - application/json
+      description: This API will accept Payfast checkout events for payment
+      parameters:
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: "000"
+        description: 000,71
+        in: query
+        name: err_code
+        type: string
+      - default: Your transaction is successfully completed. you will shortly be redirected
+          to merchant website
+        description: Descriptive message for transaction status
+        in: query
+        name: err_msg
+        type: string
+      - default: no_sample_found
+        description: Payment gateway middleware transaction id
+        in: query
+        name: rdv_message_key
+        type: string
+      - default: "2023-03-29"
+        description: Order date
+        in: query
+        name: order_date
+        type: string
+      - default: cb9cfd91-fv32-411a-8a3e-1xxa7xb2e21q
+        description: core transaction id
+        in: query
+        name: basket_id
+        type: string
+      - default: 660ffa11-e5e6-901f-5c23-620364eee73e
+        description: PSP transaction id
+        in: query
+        name: transaction_id
+        type: string
+      - default: EB4E49672F20BF27DC335C98533BE2D3
+        description: MD5 hash of `merchant_id + basket_id + <secret word> + txnamt
+          + err_code`
+        in: query
+        name: Response_Key
+        type: string
+      - default: 33dd29c5182c74eb97e7bcb0677146022f92eb61b01795e7d23b6f4b8658ac0a
+        description: SHA256 hash of `your_basket_id|your_merchant_secret_key|your_merchant_id|payasft_err_code`
+        in: query
+        name: validation_hash
+        type: string
+      - default: "1"
+        description: Merchant Amount
+        in: query
+        name: merchant_amount
+        type: string
+      - default: no_sample_found
+        description: Issuer Name
+        in: query
+        name: issuer_name
+        type: string
+      - default: "1"
+        description: Discounted Amount
+        in: query
+        name: discounted_amount
+        type: string
+      - default: PKR
+        description: Currency
+        in: query
+        name: transaction_currency
+        type: string
+      - default: "1"
+        description: Amount
+        in: query
+        name: amount
+        type: string
+      - default: Card
+        description: Payment type
+        in: query
+        name: PaymentName
+        type: string
+      - default: "1"
+        description: Transaction Amount
+        in: query
+        name: transaction_amount
+        type: string
+      - default: no_sample_found
+        description: Bill Number
+        in: query
+        name: bill_number
+        type: string
+      - default: no_sample_found
+        description: Customer Id
+        in: query
+        name: customer_id
+        type: string
+      - default: no_sample_found
+        description: Promotion Type
+        in: query
+        name: promotion_type
+        type: string
+      responses:
+        "200":
+          description: ""
+      summary: Callback for payment events
+      tags:
+      - Callback
+  /{version}/payfast/internal/call-back/payment:
+    post:
+      consumes:
+      - application/json
+      description: This API will accept insecure Payfast checkout events for payment
+      parameters:
+      - default: v1
+        description: Version
+        in: path
+        name: version
+        required: true
+        type: string
+      - default: "000"
+        description: 000,71
+        in: query
+        name: err_code
+        type: string
+      - default: Your transaction is successfully completed. you will shortly be redirected
+          to merchant website
+        description: Descriptive message for transaction status
+        in: query
+        name: err_msg
+        type: string
+      - default: cb9cfd91-fv32-411a-8a3e-1xxa7xb2e21q
+        description: core transaction id
+        in: query
+        name: basket_id
+        type: string
+      - default: 660ffa11-e5e6-901f-5c23-620364eee73e
+        description: PSP transaction id
+        in: query
+        name: transaction_id
+        type: string
+      - default: "1"
+        description: Discounted Amount
+        in: query
+        name: discounted_amount
+        type: string
+      - default: PKR
+        description: Currency
+        in: query
+        name: transaction_currency
+        type: string
+      - default: "1"
+        description: Amount
+        in: query
+        name: amount
+        type: string
+      - default: Card
+        description: Payment type
+        in: query
+        name: PaymentName
+        type: string
+      - default: no_sample_found
+        description: Promotion Type
+        in: query
+        name: promotion_type
+        type: string
+      responses:
+        "200":
+          description: ""
+      summary: Insecure Callback for payment events
+      tags:
+      - Callback
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: This API will return the server status.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/respwriter.SuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Check the health of the service.
+      tags:
+      - Health
+  /v1/payfast/external/credential-specification:
+    delete:
+      consumes:
+      - application/json
+      description: This API will process to delete credential specification
+      parameters:
+      - description: mode eg, upfront
+        in: query
+        name: mode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeleteCredentialSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: delete credential specification
+      tags:
+      - Specification
+    get:
+      description: This API will get the credential specification data based on credential
+        type
+      parameters:
+      - description: mode eg, TEST
+        in: query
+        name: mode
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetCredentialSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Get Credential Specification API
+      tags:
+      - Specification
+    post:
+      consumes:
+      - application/json
+      description: This API will process to add credential specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddCredentialSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AddCredentialSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: add credential specification
+      tags:
+      - Specification
+    put:
+      consumes:
+      - application/json
+      description: This API will process to update credential specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateCredentialSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UpdateCredentialSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: update credential specification
+      tags:
+      - Specification
+  /v1/payfast/external/specification:
+    delete:
+      consumes:
+      - application/json
+      description: This API will process to delete specification
+      parameters:
+      - description: configKey eg, upfront
+        in: query
+        name: configKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeleteSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: delete specification
+      tags:
+      - Specification
+    get:
+      description: This API will get the specification data based on config key
+      parameters:
+      - description: configKey eg, payment_gateway
+        in: query
+        name: configKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Get Specification API
+      tags:
+      - Specification
+    post:
+      consumes:
+      - application/json
+      description: This API will process to add specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AddSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: add specification
+      tags:
+      - Specification
+    put:
+      consumes:
+      - application/json
+      description: This API will process to update specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UpdateSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: update specification
+      tags:
+      - Specification
+  /v1/stripe/external/callback-specification:
+    delete:
+      consumes:
+      - application/json
+      description: This API will process to delete callback specification
+      parameters:
+      - description: callbackType eg, upfront
+        in: query
+        name: callbackType
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeleteCallbackSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: delete callback specification
+      tags:
+      - Specification
+    get:
+      description: This API will get the callback specification data based on callback
+        type
+      parameters:
+      - description: callbackType eg, create_card
+        in: query
+        name: callbackType
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetCallbackSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: Get Callback Specification API
+      tags:
+      - Specification
+    post:
+      consumes:
+      - application/json
+      description: This API will process to add callback specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddCallbackSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AddCallbackSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: add callback specification
+      tags:
+      - Specification
+    put:
+      consumes:
+      - application/json
+      description: This API will process to update callback specification
+      parameters:
+      - description: Payload
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateCallbackSpecificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UpdateCallbackSpecificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/respwriter.ErrorResponse'
+      summary: update callback specification
+      tags:
+      - Specification
+swagger: "2.0"
